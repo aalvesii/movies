@@ -3,6 +3,7 @@ package com.alexandre.movies.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,9 +29,10 @@ public class MovieService {
 	 * Save Movie
 	 * 
 	 * @param movie the Movie to be saved
+	 * @return 
 	 */
-	public void save(Movie movie) {
-		repository.save(movie);
+	public Movie save(Movie movie) {
+		return repository.save(movie);
 	}
 
 	/**
@@ -38,21 +40,31 @@ public class MovieService {
 	 * 
 	 * @param id    the Movie id
 	 * @param movie the Movie to be updated
+	 * @return
 	 */
-	public void update(Long id, Movie movie) {
+	public Movie update(Long id, Movie movie) {
 		Optional<Movie> optional = repository.findById(id);
 
 		if (optional.isPresent()) {
 			Movie movieDb = optional.get();
 
-			movieDb.setTitle(movie.getTitle());
-			movieDb.setRelease‌(movie.getRelease‌());
-			movieDb.setGenre(movie.getGenre());
-			movieDb.setOverview(movie.getOverview());
-			movieDb.setRarating(movie.getRarating());
+			if (StringUtils.isNoneEmpty(movie.getTitle()))
+				movieDb.setTitle(movie.getTitle());
+			if (movie.getRelease‌() != null)
+				movieDb.setRelease‌(movie.getRelease‌());
+			if (StringUtils.isNoneEmpty(movie.getGenre()))
+				movieDb.setGenre(movie.getGenre());
+			if (StringUtils.isNoneEmpty(movie.getOverview()))
+				movieDb.setOverview(movie.getOverview());
+			if (movie.getRarating() != null)
+				movieDb.setRarating(movie.getRarating());
 
 			repository.save(movieDb);
+
+			return movieDb;
 		}
+
+		return null;
 	}
 
 	/**

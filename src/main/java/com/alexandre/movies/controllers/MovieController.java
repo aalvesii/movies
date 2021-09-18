@@ -34,15 +34,13 @@ public class MovieController {
 	@PostMapping
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Movie> save(@RequestBody Movie movie) {
-		service.save(movie);
-		return ResponseEntity.ok(movie);
+		return ResponseEntity.ok(service.save(movie));
 	}
 
 	@PutMapping(value = "/{id}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	public ResponseEntity<Movie> update(@PathVariable("id") Long id, @RequestBody Movie movie) {
-		service.update(id, movie);
-		return ResponseEntity.ok(movie);
+		return ResponseEntity.ok(service.update(id, movie));
 	}
 
 	@DeleteMapping(value = "/{id}")
