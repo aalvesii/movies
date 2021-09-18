@@ -15,14 +15,30 @@ public class MovieService {
 	@Autowired
 	private MovieRepository repository;
 
+	/**
+	 * List all movies
+	 * 
+	 * @return all movies
+	 */
 	public List<Movie> getAll() {
 		return repository.findAll();
 	}
 
+	/**
+	 * Save Movie
+	 * 
+	 * @param movie the Movie to be saved
+	 */
 	public void save(Movie movie) {
 		repository.save(movie);
 	}
 
+	/**
+	 * Updade Movie
+	 * 
+	 * @param id    the Movie id
+	 * @param movie the Movie to be updated
+	 */
 	public void update(Long id, Movie movie) {
 		Optional<Movie> optional = repository.findById(id);
 
@@ -39,6 +55,11 @@ public class MovieService {
 		}
 	}
 
+	/**
+	 * Remove Movie by id
+	 * 
+	 * @param id the Movie id
+	 */
 	public void remove(Long id) {
 		Optional<Movie> optional = repository.findById(id);
 
@@ -47,12 +68,23 @@ public class MovieService {
 		}
 	}
 
+	/**
+	 * Count the number of Movies
+	 * 
+	 * @return movie count
+	 */
 	public long getMovieCount() {
 		return repository.count();
 	}
 
+	/**
+	 * Count the number of Movies by genre
+	 * 
+	 * @param genre the movies genre
+	 * @return movie count
+	 */
 	public long getMovieByGenre(String genre) {
-		return repository.countByGenre(genre);
+		return repository.countByGenre("%" + genre.toUpperCase() + "%");
 	}
 
 }

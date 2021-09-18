@@ -9,7 +9,13 @@ import com.alexandre.movies.entities.Movie;
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
 
-	@Query("select count(m) from Movie m where m.genre like '?1'")
+	/**
+	 * Count the number of Movies by genre
+	 * 
+	 * @param genre the movies genre
+	 * @return movie count
+	 */
+	@Query("select count(m) from Movie m where upper(m.genre) like ?1")
 	long countByGenre(String genre);
 
 }
