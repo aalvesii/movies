@@ -27,5 +27,5 @@ CREATE TABLE usuario (
 );
 
 INSERT INTO usuario (id, email, senha, perfil) VALUES
-  (1, 'admin@movies.com', '123456', 'ROLE_ADMIN'),
-  (2, 'user@movies.com', '123456', 'ROLE_USUARIO');
+  (1, 'admin@email.com', '123456', 'ROLE_ADMIN'),
+  (2, 'usuario@email.com', '123456', 'ROLE_USUARIO');
