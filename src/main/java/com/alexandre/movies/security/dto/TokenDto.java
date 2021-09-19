@@ -1,22 +1,16 @@
 package com.alexandre.movies.security.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class TokenDto {
 
-	private String token; 
-	
-	public TokenDto() {
-	}
-	
-	public TokenDto(String token) {
-		this.token = token;
-	}
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
+	private String token;
 
 }

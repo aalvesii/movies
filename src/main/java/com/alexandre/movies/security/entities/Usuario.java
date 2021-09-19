@@ -13,56 +13,29 @@ import javax.persistence.Table;
 
 import com.alexandre.movies.security.enums.PerfilEnum;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "usuario")
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 306411570471828345L;
 
-	private Long id;
-	private String email;
-	private String senha;
-	private PerfilEnum perfil;
-
-	public Usuario() {
-	}
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	private Long id;
 
 	@Column(name = "email", nullable = false)
-	public String getEmail() {
-		return email;
-	}
+	private String email;
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	@Column(name = "senha", nullable = false)
+	private String senha;
 
 	@Enumerated(EnumType.STRING)
 	@Column(name = "perfil", nullable = false)
-	public PerfilEnum getPerfil() {
-		return perfil;
-	}
-
-	public void setPerfil(PerfilEnum perfil) {
-		this.perfil = perfil;
-	}
-
-	@Column(name = "senha", nullable = false)
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
+	private PerfilEnum perfil;
 
 }

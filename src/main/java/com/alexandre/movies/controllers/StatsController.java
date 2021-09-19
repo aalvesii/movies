@@ -11,6 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alexandre.movies.entities.Movie;
 import com.alexandre.movies.services.MovieService;
 
+/**
+ * REST API for checking the number of Movies
+ * 
+ * @author alexandre
+ */
 @RestController
 @RequestMapping("/stats")
 public class StatsController {

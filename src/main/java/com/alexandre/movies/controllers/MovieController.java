@@ -15,9 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alexandre.movies.entities.Movie;
+import com.alexandre.movies.dtos.MovieDto;
 import com.alexandre.movies.services.MovieService;
 
+/**
+ * REST API for CRUD operations on Movies
+ * 
+ * @author alexandre
+ */
 @RestController
 @RequestMapping("/movies")
 public class MovieController {
@@ -25,24 +30,48 @@ public class MovieController {
 	@Autowired
 	private MovieService service;
 
+	/**
+	 * Get all Movies
+	 * 
+	 * @return list of all Movies
+	 */
 	@GetMapping
 	@PreAuthorize("hasAnyRole('ADMIN', 'USUARIO')")
-	public ResponseEntity<List<Movie>> getAll() {
+	public ResponseEntity<List<MovieDto>> getAll() {
 		return ResponseEntity.ok(service.getAll());
 	}
 
+	/**
+	 * Save the Movie
+	 * 
+	 * @param movie the Movie to be saved
+	 * @return the saved Movie
+	 */
 	@PostMapping
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<Movie> save(@RequestBody Movie movie) {
+	public ResponseEntity<MovieDto> save(@RequestBody MovieDto movie) {
 		return ResponseEntity.ok(service.save(movie));
 	}
 
+	/**
+	 * Update a existing Movie. The undefined attributes will be ignored
+	 * 
+	 * @param id    the Movie id to be updated
+	 * @param movie the Movie to be updated
+	 * @return the updated Movie
+	 */
 	@PutMapping(value = "/{id}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<Movie> update(@PathVariable("id") Long id, @RequestBody Movie movie) {
+	public ResponseEntity<MovieDto> update(@PathVariable("id") Long id, @RequestBody MovieDto movie) {
 		return ResponseEntity.ok(service.update(id, movie));
 	}
 
+	/**
+	 * Removes a Movie
+	 * 
+	 * @param id the Movie id to be deleted
+	 * @return the REST status
+	 */
 	@DeleteMapping(value = "/{id}")
 	@PreAuthorize("hasAnyRole('ADMIN')")
 	public BodyBuilder remove(@PathVariable("id") Long id) {

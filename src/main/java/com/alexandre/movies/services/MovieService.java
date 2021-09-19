@@ -7,6 +7,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.alexandre.movies.MovieMapper;
+import com.alexandre.movies.dtos.MovieDto;
 import com.alexandre.movies.entities.Movie;
 import com.alexandre.movies.repositories.MovieRepository;
 
@@ -16,23 +18,28 @@ public class MovieService {
 	@Autowired
 	private MovieRepository repository;
 
+	@Autowired
+	private MovieMapper mapper;
+
 	/**
 	 * List all movies
 	 * 
 	 * @return all movies
 	 */
-	public List<Movie> getAll() {
-		return repository.findAll();
+	public List<MovieDto> getAll() {
+		List<Movie> movies = repository.findAll();
+		return mapper.map(movies);
 	}
 
 	/**
 	 * Save Movie
 	 * 
 	 * @param movie the Movie to be saved
-	 * @return 
+	 * @return
 	 */
-	public Movie save(Movie movie) {
-		return repository.save(movie);
+	public MovieDto save(MovieDto movieDto) {
+		Movie movie = repository.save(mapper.map(movieDto));
+		return mapper.map(movie);
 	}
 
 	/**
@@ -42,7 +49,7 @@ public class MovieService {
 	 * @param movie the Movie to be updated
 	 * @return
 	 */
-	public Movie update(Long id, Movie movie) {
+	public MovieDto update(Long id, MovieDto movie) {
 		Optional<Movie> optional = repository.findById(id);
 
 		if (optional.isPresent()) {
@@ -61,7 +68,7 @@ public class MovieService {
 
 			repository.save(movieDb);
 
-			return movieDb;
+			return mapper.map(movieDb);
 		}
 
 		return null;
