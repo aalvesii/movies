@@ -63,7 +63,9 @@ public class MovieService {
 				movieDb.setGenre(movie.getGenre());
 			if (StringUtils.isNoneEmpty(movie.getOverview()))
 				movieDb.setOverview(movie.getOverview());
-			if (movie.getRarating() != null)
+
+			Integer rate = movie.getRarating();
+			if (rate != null && rate >= 1 && rate <= 5)
 				movieDb.setRarating(movie.getRarating());
 
 			repository.save(movieDb);

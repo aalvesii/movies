@@ -2,10 +2,13 @@ package com.alexandre.movies.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.ResponseEntity.BodyBuilder;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alexandre.movies.dtos.MovieDto;
+import com.alexandre.movies.exceptions.MovieException;
 import com.alexandre.movies.services.MovieService;
 
 /**
@@ -46,10 +50,16 @@ public class MovieController {
 	 * 
 	 * @param movie the Movie to be saved
 	 * @return the saved Movie
+	 * @throws MovieException
 	 */
 	@PostMapping
 	@PreAuthorize("hasAnyRole('ADMIN')")
-	public ResponseEntity<MovieDto> save(@RequestBody MovieDto movie) {
+	public ResponseEntity<MovieDto> save(@Valid @RequestBody MovieDto movie, BindingResult result)
+			throws MovieException {
+		if (result.hasErrors()) {
+			throw new MovieException(result);
+		}
+
 		return ResponseEntity.ok(service.save(movie));
 	}
 

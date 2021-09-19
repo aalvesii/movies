@@ -1,8 +1,6 @@
 package com.alexandre.movies.security.controllers;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -17,7 +15,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -59,14 +56,7 @@ public class AuthenticationController {
 	public ResponseEntity<TokenDto> gerarTokenJwt(@Valid @RequestBody JwtAuthenticationDto authenticationDto,
 			BindingResult result) throws AuthenticationException, MovieException {
 		if (result.hasErrors()) {
-			List<ObjectError> errors = result.getAllErrors();
-
-			List<String> errorMessages = errors.stream().map(ObjectError::getDefaultMessage)
-					.collect(Collectors.toList());
-
-			String error = errorMessages.stream().map(Object::toString).collect(Collectors.joining(","));
-
-			throw new MovieException(error);
+			throw new MovieException(result);
 		}
 
 		Authentication authentication = authenticationManager.authenticate(
