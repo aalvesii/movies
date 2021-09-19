@@ -4,6 +4,9 @@ This is a Spring Boot app. So it should be initialized as so.
 
 For testing the API, you could use a REST client such as Postman.
 
+You could also check it's API documentation accessing the URL (considering that the APP was deployed on localhost:8080):
+http://localhost:8080/swagger-ui/
+
 In order to get access to the movies API, you should be authorized. Which is made by generating a token through JWT API. Follow the steps:
 
 ### 1 on Postman access the URL
@@ -55,4 +58,3 @@ body<br/>
 {<br/>
     "genre": "fantasy"<br/>
 }
-
